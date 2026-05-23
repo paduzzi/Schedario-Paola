@@ -1,0 +1,31 @@
+export function addToGoogleCalendar({ title, date, section }) {
+  const parts = date.split('/');
+  const day = parts[0]?.padStart(2,'0');
+  const month = parts[1]?.padStart(2,'0');
+  const year = parts[2] || new Date().getFullYear();
+  if (!day || !month) return;
+  const ds = `${year}${month}${day}`;
+  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('[ASP] '+title+' – '+section)}&dates=${ds}/${ds}&details=${encodeURIComponent('Da Schedario ASP – '+section)}`;
+  window.open(url, '_blank');
+}
+
+export function exportAllToICS(sectionData, tabs) {
+  const lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Schedario ASP//IT','CALSCALE:GREGORIAN'];
+  Object.entries(sectionData).forEach(([sId, data]) => {
+    const tab = tabs.find(t=>t.id===sId);
+    const name = tab?.label || sId;
+    (data.scadenze||[]).forEach(s => {
+      if (!s.date) return;
+      const [d,m,y] = s.date.split('/');
+      if (!d||!m) return;
+      const ds = `${y||new Date().getFullYear()}${m.padStart(2,'0')}${d.padStart(2,'0')}`;
+      lines.push('BEGIN:VEVENT',`UID:asp-${s.id}@schedario`,`DTSTART;VALUE=DATE:${ds}`,`DTEND;VALUE=DATE:${ds}`,`SUMMARY:[${name}] ${s.text}`,'END:VEVENT');
+    });
+  });
+  lines.push('END:VCALENDAR');
+  const blob = new Blob([lines.join('\r\n')], { type: 'text/calendar' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'scadenze-asp.ics';
+  a.click();
+}

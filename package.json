@@ -1,0 +1,108 @@
+export const DEFAULT_TABS = [
+  { id: 'home',     emoji: '🏠', label: 'Home',            color: '#888888' },
+  { id: 'pasubio',  emoji: '🔴', label: 'Pasubio',         color: '#e74c3c' },
+  { id: 'alveare',  emoji: '🩷', label: 'Alveare',         color: '#e91e8c' },
+  { id: 'villa',    emoji: '🟣', label: 'Villa Ester',     color: '#9b59b6' },
+  { id: 'estivi',   emoji: '🔵', label: 'Centri Estivi',   color: '#3498db' },
+  { id: 'sorgente', emoji: '🟢', label: 'Sorgente',        color: '#27ae60' },
+  { id: 'dir',      emoji: '🟡', label: 'Direzione',       color: '#f39c12' },
+  { id: 'mezzi',    emoji: '🚗', label: 'Mezzi',           color: '#e67e22' },
+  { id: 'housing',  emoji: '🏠', label: 'Housing Sociale', color: '#16a085' },
+  { id: 'cassa',    emoji: '💶', label: 'Cassa',           color: '#2ecc71' },
+  { id: 'conv',     emoji: '📄', label: 'Convenzioni',     color: '#95a5a6' },
+];
+
+export const TAB_COLORS = [
+  '#e74c3c','#e91e8c','#9b59b6','#3498db','#27ae60',
+  '#f39c12','#e67e22','#16a085','#2ecc71','#95a5a6','#c0392b'
+];
+
+const mk = (text) => ({ id: 'c_' + Math.random().toString(36).substr(2,6), text, done: false });
+const ms = (text, date, urgente=false) => ({ id: 's_' + Math.random().toString(36).substr(2,6), text, date, urgente });
+const mc = (name, role, color) => {
+  const initials = name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  return { id: 'ct_' + Math.random().toString(36).substr(2,6), initials, name, role, color };
+};
+
+export const DEFAULT_SECTION_DATA = {
+  pasubio: {
+    checklist: [mk('Chiamare AUSL – rinnovo autorizzazione'), mk('Progetto OTAP Q3 – bozza'), mk('Aggiornare organico estivo'), mk('PAI Rossi Mario – stesura')],
+    scadenze: [ms('PAI Rossi Mario','23/07',true), ms('Verifica INAIL','30/07'), ms('Progetto OTAP','15/08')],
+    note: '',
+    contatti: [mc('Dr.ssa Renzi','Responsabile AUSL','#3498db'), mc('Marco Ferrari','Coordinatore OTAP','#27ae60')],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  alveare: {
+    checklist: [mk('Firmare turni luglio'), mk('Riunione équipe – convocare'), mk('Aggiornare PAI M.B.'), mk('Verifica spese mensili')],
+    scadenze: [ms('Colloquio famiglia B.','22/07',true), ms('Supervisione équipe','25/07')],
+    note: '',
+    contatti: [mc('Giulia Sordi','Psicologa','#9b59b6'), mc('Luca Parisi','Educatore ref.','#e74c3c')],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  villa: {
+    checklist: [mk('Sopralluogo struttura'), mk('Aggiornamento SISS'), mk('Contattare famiglie')],
+    scadenze: [ms('Verifica locali','28/07')],
+    note: '',
+    contatti: [mc('Anna Franchi','Coord. struttura','#9b59b6')],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  estivi: {
+    checklist: [mk('Modulo iscrizioni 2025 – completare'), mk('Autorizzazioni gite'), mk('Elenco educatori'), mk('Acquisti materiali')],
+    scadenze: [ms('Chiusura iscrizioni','05/07',true), ms('Inizio attività','01/07')],
+    note: '',
+    contatti: [mc('Marta Boni','Ref. estivi','#3498db')],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  sorgente: {
+    checklist: [mk('Colloqui famiglie'), mk('Report trimestrale'), mk('Aggiornamento documentazione')],
+    scadenze: [ms('Report Q2','31/07')],
+    note: '',
+    contatti: [mc('Elena Vitali','Home visitor','#27ae60')],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  dir: {
+    checklist: [mk('CDA luglio – ordine del giorno'), mk('Budget previsionale H2'), mk('Piano formazione'), mk('Organigramma')],
+    scadenze: [ms('CDA','30/07'), ms('Budget H2','01/08')],
+    note: '',
+    contatti: [],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  mezzi: {
+    checklist: [],
+    scadenze: [],
+    note: '',
+    contatti: [],
+    blocchi: ['veicoli','note'],
+    veicoli: [
+      { id: 'v1', nome: 'Agila', targa: '', items: [mk('Revisione'), mk('Tagliando'), mk('Gomme'), mk('Assicurazione')] },
+      { id: 'v2', nome: 'Panda', targa: '', items: [mk('Revisione'), mk('Tagliando'), mk('Gomme')] },
+      { id: 'v3', nome: 'Ducato Elettrico', targa: '', items: [mk('Revisione'), mk('Ricarica/collaudo'), mk('Tagliando')] },
+    ],
+  },
+  housing: {
+    checklist: [mk('Verifica appartamenti'), mk('Contratti – scadenze'), mk('Bandi attivi')],
+    scadenze: [ms('Verifica contratto A3','15/08')],
+    note: '',
+    contatti: [],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  cassa: {
+    checklist: [mk('Rendiconto luglio'), mk('Fatture in sospeso'), mk('Budget agosto')],
+    scadenze: [ms('Rendiconto Q2','25/07')],
+    note: '',
+    contatti: [],
+    blocchi: ['checklist','scadenze','note','contatti','allegati'],
+  },
+  conv: {
+    checklist: [],
+    scadenze: [],
+    note: '',
+    contatti: [],
+    blocchi: ['convenzioni','note'],
+    convenzioni: [
+      { id: 'cv1', nome: 'AUSL Parma – Pasubio', scad: '31/12/2025', ref: 'Dr.ssa Renzi', urgente: false },
+      { id: 'cv2', nome: 'Comune di Parma – Alveare', scad: '30/06/2025', ref: 'Dott. Masi', urgente: true },
+      { id: 'cv3', nome: 'ASL – Sorgente', scad: '31/03/2026', ref: 'Ufficio Conv.', urgente: false },
+    ],
+  },
+};
